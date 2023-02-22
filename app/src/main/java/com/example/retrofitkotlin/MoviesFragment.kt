@@ -38,7 +38,7 @@ class MoviesFragment : Fragment() {
 
         recyclerView = binding.rvMovie
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
 
         val quotesApi = RetrofitHelper.getInstance().create(ApiInterface::class.java)
