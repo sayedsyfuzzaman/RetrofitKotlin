@@ -117,7 +117,7 @@
         android:layout_marginBottom="20dp">
         
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgMovie"
+            android:id="@+id/imgMoviePoster"
             android:layout_width="115dp"
             android:layout_height="160dp"
             android:scaleType="fitXY"

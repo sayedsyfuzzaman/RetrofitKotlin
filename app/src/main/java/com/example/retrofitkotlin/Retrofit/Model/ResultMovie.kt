@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin
+package com.example.retrofitkotlin.Retrofit.Model
 
 data class ResultMovie(
     val adult: Boolean,
