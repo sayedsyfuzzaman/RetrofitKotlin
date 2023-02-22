@@ -41,10 +41,10 @@ class MoviesFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
 
-        val quotesApi = RetrofitHelper.getInstance().create(ApiInterface::class.java)
+        val moviesListApi = RetrofitHelper.getInstance().create(ApiInterface::class.java)
 
         GlobalScope.launch (Dispatchers.IO){
-            val result = quotesApi.getMovies("623db847c0ed057d1e6f56726d9a865f", "en-US", 1)
+            val result = moviesListApi.getMovies("623db847c0ed057d1e6f56726d9a865f", "en-US", 1)
 //            Log.d("Status Code", result.code().toString())
             if (result.code().toInt() == 200){
                 val movieList = result.body()

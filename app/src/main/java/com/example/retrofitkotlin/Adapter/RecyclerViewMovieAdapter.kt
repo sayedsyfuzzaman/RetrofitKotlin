@@ -2,12 +2,16 @@ package com.example.retrofitkotlin.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -26,7 +30,7 @@ class RecyclerViewMovieAdapter (private val movieList: ArrayList<ResultMovie>)
     : RecyclerView.Adapter<RecyclerViewMovieAdapter.MovieViewHolder>(){
 
     private var POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342"
-    private lateinit var context: Context
+    private lateinit var mainView:View
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var movieName: TextView = itemView.findViewById(R.id.tvMovieName)
@@ -34,10 +38,12 @@ class RecyclerViewMovieAdapter (private val movieList: ArrayList<ResultMovie>)
         var movieLanguage:TextView = itemView.findViewById(R.id.tvLang)
         var movieReleaseDate:TextView = itemView.findViewById(R.id.tvReleaseDate)
         var moviePoster: ShapeableImageView = itemView.findViewById(R.id.imgMoviePoster)
+        var root:ConstraintLayout = itemView.findViewById(R.id.infoRoot)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_row, parent, false)
+        mainView = view
         return MovieViewHolder(view)
     }
 
@@ -56,6 +62,14 @@ class RecyclerViewMovieAdapter (private val movieList: ArrayList<ResultMovie>)
             crossfade(true)
             placeholder(R.drawable.poster_placeholder)
             scale(Scale.FILL)
+        }
+
+        val args = Bundle().apply {
+            putInt("id", movies.id)
+        }
+
+        holder.root.setOnClickListener {
+            Navigation.findNavController(mainView).navigate(R.id.action_moviesFragment_to_movieDetailsFragment, args)
         }
     }
 }
