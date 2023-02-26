@@ -68,7 +68,7 @@ class RecyclerViewMovieAdapter (private val movieList: ArrayList<ResultMovie>)
             putInt("id", movies.id)
         }
 
-        holder.root.setOnClickListener {
+        holder.itemView.setOnClickListener {
             Navigation.findNavController(mainView).navigate(R.id.action_moviesFragment_to_movieDetailsFragment, args)
         }
     }

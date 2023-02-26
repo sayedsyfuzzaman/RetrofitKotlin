@@ -3,6 +3,7 @@ package com.example.retrofitkotlin
 import android.annotation.SuppressLint
 import android.os.Binder
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +16,7 @@ import com.example.retrofitkotlin.Retrofit.Model.ResultMovie
 import com.example.retrofitkotlin.Retrofit.RetrofitHelper
 import com.example.retrofitkotlin.databinding.FragmentMovieDetailsBinding
 import com.example.retrofitkotlin.databinding.FragmentMoviesBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class MovieDetailsFragment : Fragment() {
 
@@ -39,14 +37,15 @@ class MovieDetailsFragment : Fragment() {
         return view
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val movieDetailsApi = RetrofitHelper.getInstance().create(ApiInterface::class.java)
-
+//        Log.d("details id", movieId.toString())
         GlobalScope.launch (Dispatchers.IO){
-            val result = movieDetailsApi.getMovieDetails(id=movieId,"623db847c0ed057d1e6f56726d9a865f")
+            val result = movieDetailsApi.getMovieDetails(movieId,"623db847c0ed057d1e6f56726d9a865f")
 //            Log.d("Status Code", result.code().toString())
             if (result.code().toInt() == 200){
                 val movieDetails = result.body()
@@ -60,6 +59,18 @@ class MovieDetailsFragment : Fragment() {
                         binding.tvMovieBudget.text = movieDetails.budget.toString()
                         binding.tvMovieRevenue.text = movieDetails.revenue.toString()
                         binding.tvMovieOverview.text = movieDetails.overview
+
+
+//                        Log.d("details title", movieDetails.original_title)
+//                        Log.d("details tag", movieDetails.tagline)
+//                        Log.d("details release", movieDetails.release_date)
+//                        Log.d("details vote", movieDetails.vote_average.toString())
+//                        Log.d("details runtime", movieDetails.runtime.toString()+" hr")
+//                        Log.d("details budget", movieDetails.budget.toString())
+//                        Log.d("details revenue", movieDetails.revenue.toString())
+//                        Log.d("details overview", movieDetails.overview)
+//                        Log.d("details poster", movieDetails.poster_path)
+
 
                         val moviePosterURL = POSTER_BASE_URL+movieDetails.poster_path
 

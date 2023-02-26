@@ -1,5 +1,6 @@
 package com.example.retrofitkotlin
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -53,7 +54,10 @@ class MoviesFragment : Fragment() {
                 }
                 withContext(Dispatchers.Main){
                     val deviceAdapter = RecyclerViewMovieAdapter(listOfMovies)
+                    deviceAdapter.notifyDataSetChanged()
                     recyclerView.adapter = deviceAdapter
+
+
                 }
             }
 
